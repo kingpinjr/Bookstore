@@ -4,20 +4,21 @@
 }
 <div class="container">
     <form method="post">
+    <div class="row text-danger" asp-validation-summary="All"></div>
         <div class="row m-2">
             <div class="col-2">
-                <label class="form-label">Email</label>
+                <label class="form-label" asp-for="LoginUser.Email">Email</label>
             </div>
             <div class="col-10">
-                <input type="email" class="form-control"/>
+                <input type="email" class="form-control" asp-for="LoginUser.Email"/>
             </div>
         </div>
         <div class="row m-2">
             <div class="col-2">
-                <label class="form-label">Password</label>
+                <label class="form-label" asp-for="LoginUser.Password">Password</label>
             </div>
             <div class="col-10">
-                <input type="password" class="form-control" />
+                <input type="password" class="form-control" asp-for="LoginUser.Password"/>
             </div>
         </div>
         <div class="row m-2">
