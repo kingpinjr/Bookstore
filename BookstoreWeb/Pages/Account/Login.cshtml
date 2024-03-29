@@ -2,14 +2,19 @@
 @model BookstoreWeb.Pages.Account.LoginModel
 @{
 }
-<div class="container">
+<div class="container p-2 my-5 border bg-light w-50">
     <form method="post">
     <div class="row text-danger" asp-validation-summary="All"></div>
+        <div class="row m-2">
+            <div class="col-12 text-center">
+                <label class="fs-1">Sign In</label>
+            </div>
+        </div>
         <div class="row m-2">
             <div class="col-2">
                 <label class="form-label" asp-for="LoginUser.Email">Email</label>
             </div>
-            <div class="col-10">
+            <div class="col-12">
                 <input type="email" class="form-control" asp-for="LoginUser.Email"/>
             </div>
         </div>
@@ -17,12 +22,12 @@
             <div class="col-2">
                 <label class="form-label" asp-for="LoginUser.Password">Password</label>
             </div>
-            <div class="col-10">
+            <div class="col-12">
                 <input type="password" class="form-control" asp-for="LoginUser.Password"/>
             </div>
         </div>
         <div class="row m-2">
-            <div class="col-2">
+            <div class="col-12 text-center">
                 <button id="btnLogin" class="btn btn-primary">Sign In</button>
             </div>
         </div>

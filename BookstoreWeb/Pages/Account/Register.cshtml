@@ -2,87 +2,94 @@
 @model BookstoreWeb.Pages.Account.Register
 @{
 }
-<form method="post">
-    <div class="row text-danger" asp-validation-summary="All"></div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.FirstName" class="form-label"></label>
+<div class="container p-2 my-5 border bg-light w-50">
+    <form method="post">
+        <div class="row text-danger" asp-validation-summary="All"></div>
+        <div class="row m-2">
+            <div class="col-12 text-center">
+                <label class="fs-1">Register</label>
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.FirstName" type="text" class="form-control" />
-            <span asp-validation-for="NewPerson.FirstName" class="text-danger"></span>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.FirstName" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.FirstName" type="text" class="form-control" />
+                <span asp-validation-for="NewPerson.FirstName" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.LastName" class="form-label"></label>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.LastName" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.LastName" type="text" class="form-control" />
+                <span asp-validation-for="NewPerson.LastName" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.LastName" type="text" class="form-control" />
-            <span asp-validation-for="NewPerson.LastName" class="text-danger"></span>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.Email" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.Email" type="email" class="form-control" />
+                <span asp-validation-for="NewPerson.Email" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.Email" class="form-label"></label>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.Password" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.Password" type="password" class="form-control" />
+                <span asp-validation-for="NewPerson.Password" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.Email" type="email" class="form-control" />
-            <span asp-validation-for="NewPerson.Email" class="text-danger"></span>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.PhoneNumber" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.PhoneNumber" type="text" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.Password" class="form-label"></label>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.Address" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.Address" type="text" class="form-control" />
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.Password" type="password" class="form-control" />
-            <span asp-validation-for="NewPerson.Password" class="text-danger"></span>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.City" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.City" type="text" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.PhoneNumber" class="form-label"></label>
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.State" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.State" type="text" class="form-control" />
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.PhoneNumber" type="text" class="form-control" />
+        <div class="row m-2">
+            <div class="col-4">
+                <label asp-for="NewPerson.PostalCode" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <input asp-for="NewPerson.PostalCode" type="text" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.Address" class="form-label"></label>
+        <div class="row m-2">
+            <div class="col-12 text-center">
+                <button id="btnRegister" class="btn btn-primary">Register</button>
+            </div>
         </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.Address" type="text" class="form-control" />
-        </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.City" class="form-label"></label>
-        </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.City" type="text" class="form-control" />
-        </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.State" class="form-label"></label>
-        </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.State" type="text" class="form-control" />
-        </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <label asp-for="NewPerson.PostalCode" class="form-label"></label>
-        </div>
-        <div class="col-10">
-            <input asp-for="NewPerson.PostalCode" type="text" class="form-control" />
-        </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-2">
-            <button id="btnRegister" class="btn btn-primary">Register</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

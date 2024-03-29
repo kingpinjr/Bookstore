@@ -15,7 +15,7 @@ namespace BookstoreBusiness
 
         public static string GetDBConnectionString()
         {
-            return "Server=(localdb)\\MSSQLLocalDB;Database=Bookstore;Trusted_Connection=true;"
+            return "Server=(localdb)\\MSSQLLocalDB;Database=Bookstore;Trusted_Connection=true;";
         }
     }
 }
