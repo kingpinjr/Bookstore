@@ -2,6 +2,7 @@
 @model BookstoreWeb.Pages.Account.LoginModel
 @{
 }
+<div>
 <div class="container p-2 my-5 border bg-light w-50">
     <form method="post">
     <div class="row text-danger" asp-validation-summary="All"></div>
@@ -31,5 +32,11 @@
                 <button id="btnLogin" class="btn btn-primary">Sign In</button>
             </div>
         </div>
+        <div class="row m-2">
+            <div class="col-12 text-center">
+                <a href="https://localhost:7192/Account/Register">Don't have an account yet? Register here.</a>
+            </div>
+        </div>
     </form>
+</div>
 </div>

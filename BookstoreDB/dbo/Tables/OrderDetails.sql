@@ -4,6 +4,9 @@
     [Quantity]      INT NOT NULL,
     [BookID]        INT NOT NULL,
     CONSTRAINT [PK_OrderDetails] PRIMARY KEY CLUSTERED ([OrderDetailID] ASC),
-    CONSTRAINT [FK_OrderDetails_OrderDetails] FOREIGN KEY ([OrderDetailID]) REFERENCES [dbo].[OrderDetails] ([OrderDetailID])
+    CONSTRAINT [FK_OrderDetails_Book] FOREIGN KEY ([BookID]) REFERENCES [dbo].[Book] ([BookID]),
+    CONSTRAINT [FK_OrderDetails_Bookstore] FOREIGN KEY ([BookstoreID]) REFERENCES [dbo].[Bookstore] ([BookstoreID])
 );
+
+
 
