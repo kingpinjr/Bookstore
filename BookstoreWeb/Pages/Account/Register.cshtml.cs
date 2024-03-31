@@ -29,8 +29,8 @@ namespace BookstoreWeb.Pages.Account
 
                 // 2. Create an insert query
 
-                string cmdText = "INSERT INTO User (FirstName, LastName, Email, Password, PhoneNumber, Address, City, State, PostalCode, isAdmin)" + "" +
-                    " VALUES (@firstName, @lastName, @email, @password, @phoneNumber, @address, @city, @state, @postalCode, 0;";
+                string cmdText = "INSERT INTO [User] (FirstName, LastName, Email, Password, PhoneNumber, Address, City, State, PostalCode, isAdmin)" +
+                    " VALUES (@firstName, @lastName, @email, @password, @phoneNumber, @address, @city, @state, @postalCode, 0);";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@firstName", NewPerson.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", NewPerson.LastName);
@@ -41,7 +41,6 @@ namespace BookstoreWeb.Pages.Account
                 cmd.Parameters.AddWithValue("@city", NewPerson.City);
                 cmd.Parameters.AddWithValue("@state", NewPerson.State);
                 cmd.Parameters.AddWithValue("@postalCode", NewPerson.PostalCode);
-                Console.WriteLine(cmdText);
                 //cmd.Parameters.AddWithValue("@firstName", NewPerson.RoleId);
 
                 // 3. Open the database
