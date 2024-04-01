@@ -17,6 +17,7 @@
             </div>
             <div class="col-12">
                 <input type="email" class="form-control" asp-for="LoginUser.Email"/>
+                <span asp-validation-for="LoginUser.Email" class="text-danger"></span>
             </div>
         </div>
         <div class="row m-2">
@@ -25,6 +26,7 @@
             </div>
             <div class="col-12">
                 <input type="password" class="form-control" asp-for="LoginUser.Password"/>
+                <span asp-validation-for="LoginUser.Password" class="text-danger"></span>
             </div>
         </div>
         <div class="row m-2">
