@@ -19,13 +19,29 @@ namespace BookstoreWeb.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                // Insert data into database
+                // Make sure the email does not exist before registering the user
 
-                // 1. Create a database connection string
+                if (EmailAvailable(NewPerson.Email))
+                {
+                    RegisterUser();
+                    return RedirectToPage("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("RegisterError", "The email address already exists. Try a different one.");
+                    return Page();
+                }
+            }
+            else
+            {
+                return Page();
+            }
+        }
 
-                //string connString = "Server=(localdb)\\MSSQLLocalDB;Database=Bookstore;Trusted_Connection=true;";
-                string connString = SecurityHelper.GetDBConnectionString();
-                SqlConnection conn = new SqlConnection(connString);
+        private void RegisterUser()
+        {
+            using(SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
 
                 // 2. Create an insert query
 
@@ -52,15 +68,23 @@ namespace BookstoreWeb.Pages.Account
                 // use ExecuteNonQuery when you aren't expecting a return result
                 // for example, an insert, update, or delete query
                 cmd.ExecuteNonQuery();
-
-                // 5. Close the database
-
-                conn.Close();
-                return RedirectToPage("Login");
             }
-            else
+        }
+
+        private bool EmailAvailable(string email)
+        {
+            using(SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                return Page();
+                string cmdText = "SELECT Email FROM [User] WHERE Email=@email";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                cmd.Parameters.AddWithValue("@email", email);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    return false;
+                }
+                return true;
             }
         }
     }

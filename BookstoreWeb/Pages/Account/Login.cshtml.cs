@@ -19,8 +19,28 @@ namespace BookstoreWeb.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString());
-                string cmdText = "SELECT Password FROM [User] WHERE Email=@email";
+                // Check login credentials
+                if (ValidateCredentials())
+                {
+                    return RedirectToPage("Profile");
+                }
+                else
+                {
+                    ModelState.AddModelError("LoginError", "Invalid credentials. Try again.");
+                    return Page();
+                }
+            }
+            else
+            {
+                return Page();
+            }
+        }
+
+        private bool ValidateCredentials()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT Password, UserID FROM [User] WHERE Email=@email";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@email", LoginUser.Email);
                 conn.Open();
@@ -33,30 +53,39 @@ namespace BookstoreWeb.Pages.Account
                         string passwordHash = reader.GetString(0);
                         if (SecurityHelper.VerifyPassword(LoginUser.Password, passwordHash))
                         {
-                            return RedirectToPage("Profile");
+                            // Get the UserID and use it to update the User record
+                            int userID = reader.GetInt32(1);
+                            //UpdateUserLoginTime(userID);
+                            return true;
                         }
                         else
                         {
-                            ModelState.AddModelError("LoginError", "Invalid credentials. Try again.");
-                            return Page();
+                            return false;
                         }
                     }
                     else
                     {
-                        return Page();
+                        return false;
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("LoginError", "Invalid credentials. Try again.");
-                    return Page();
+                    return false;
                 }
-                conn.Close();
-            }
-            else
-            {
-                return Page();
             }
         }
+        /*
+        private void UpdateUserLoginTime(int userID)
+        {
+            using(SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "UPDATE [User] SET LastLoginTime=@lastLoginTime WHERE UserID=@userID";
+                SqlCommand cmd = new SqlCommand( cmdText, conn);
+                cmd.Parameters.AddWithValue("@lastLoginTime", DateTime.Now);
+                cmd.Parameters.AddWithValue("@userID", userID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }*/
     }
 }
