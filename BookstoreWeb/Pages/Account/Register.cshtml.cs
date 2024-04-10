@@ -53,10 +53,18 @@ namespace BookstoreWeb.Pages.Account
                 cmd.Parameters.AddWithValue("@email", NewPerson.Email);
                 cmd.Parameters.AddWithValue("@password", SecurityHelper.GeneratePasswordHash(NewPerson.Password));
                 cmd.Parameters.AddWithValue("@phoneNumber", NewPerson.PhoneNumber);
-                cmd.Parameters.AddWithValue("@address", NewPerson.Address);
-                cmd.Parameters.AddWithValue("@city", NewPerson.City);
-                cmd.Parameters.AddWithValue("@state", NewPerson.State);
-                cmd.Parameters.AddWithValue("@postalCode", NewPerson.PostalCode);
+
+                if (NewPerson.Address == null) { cmd.Parameters.AddWithValue("@address", "null");}
+                else { cmd.Parameters.AddWithValue("@address", NewPerson.Address); }
+                
+                if(NewPerson.City == null) { cmd.Parameters.AddWithValue("@city", "null"); }
+                else { cmd.Parameters.AddWithValue("@city", NewPerson.City); }
+
+                if (NewPerson.State == null) { cmd.Parameters.AddWithValue("@state", "null"); }
+                else { cmd.Parameters.AddWithValue("@state", NewPerson.State); }
+
+                if (NewPerson.PostalCode == null) { cmd.Parameters.AddWithValue("@postalCode", "null"); }
+                else { cmd.Parameters.AddWithValue("@postalCode", NewPerson.PostalCode); }
                 //cmd.Parameters.AddWithValue("@firstName", NewPerson.RoleId);
 
                 // 3. Open the database

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreWeb", "BookstoreWeb\BookstoreWeb.csproj", "{4279FC94-3016-425B-9A0C-329F2F745927}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreWeb", "BookstoreWeb\BookstoreWeb.csproj", "{4279FC94-3016-425B-9A0C-329F2F745927}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BookstoreDB", "BookstoreDB\BookstoreDB.sqlproj", "{D1EE7800-C67F-4090-8AED-5A4C6E92C126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreBusiness", "BookstoreBusiness\BookstoreBusiness.csproj", "{B3508A01-5B05-4614-BE7C-87E8B0AA39F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreBusiness", "BookstoreBusiness\BookstoreBusiness.csproj", "{B3508A01-5B05-4614-BE7C-87E8B0AA39F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,104 @@
+﻿@page
+@model BookstoreWeb.Pages.Books.EditBookModel
+@{
+}
+<form method="post" class="form-group">
+    <div class="row m-2">
+        <div class="col-4">
+            <h2>Edit Book</h2>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.BookId"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.BookId"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.Title"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.Title"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.Description"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.Description"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.Price"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.Price"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.AuthorId"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="nBook.AuthorId"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.BookstoreId"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.BookstoreId"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.Publisher"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.Publisher"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.PublicationDate"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.PublicationDate"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.ISBN"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.ISBN"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.Stock"></label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" asp-for="Book.Stock"/>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="Book.GenreId"></label>
+        </div>
+        <div class="col-10">
+            <select asp-for="Book.GenreId" asp-items="@Model.Genres"></select>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <input type="submit" value="Update" class="btn btn-primary"/>
+        </div>
+    </div>
+</form>

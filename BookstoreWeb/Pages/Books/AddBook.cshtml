@@ -1,0 +1,99 @@
+﻿@page
+@model BookstoreWeb.Pages.Books.AddBookModel
+@{
+}
+<form method="post" class="form-group">
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.BookId"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.BookId"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.Title"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.Title"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.Description"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.Description"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.Price"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.Price"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.AuthorId"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.AuthorId"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.BookstoreId"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.BookstoreId"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.Publisher"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.Publisher"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.PublicationDate"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.PublicationDate"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.ISBN"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.ISBN"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.Stock"></label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" asp-for="newBook.Stock"></textarea>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <label asp-for="newBook.GenreId"></label>
+        </div>
+        <div class="col-10">
+            <select asp-for="newBook.GenreId" asp-items="@Model.Genres"></select>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-2">
+            <button id="btnAdd" class="btn btn-primary">Add Book</button>
+        </div>
+    </div>
+</form>
