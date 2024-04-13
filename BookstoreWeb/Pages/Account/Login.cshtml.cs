@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BookstoreWeb.Model;
 using Microsoft.Data.SqlClient;
 using BookstoreBusiness;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BookstoreWeb.Pages.Account
 {
@@ -40,7 +43,7 @@ namespace BookstoreWeb.Pages.Account
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT Password, UserID FROM [User] WHERE Email=@email";
+                string cmdText = "SELECT Password, UserID, FirstName, Email, isAdmin FROM [User] WHERE Email=@email";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@email", LoginUser.Email);
                 conn.Open();
@@ -56,6 +59,28 @@ namespace BookstoreWeb.Pages.Account
                             // Get the UserID and use it to update the User record
                             int userID = reader.GetInt32(1);
                             //UpdateUserLoginTime(userID);
+                            
+                            // Create a principal
+                            string name = reader.GetString(2);
+                            //string role = reader.GetString(4);
+
+                            // Create list of claims
+
+                            Claim emailClaim = new Claim(ClaimTypes.Email, LoginUser.Email);
+                            Claim nameClaim = new Claim(ClaimTypes.Name, name);
+                            //Claim roleClaim = new Claim(ClaimTypes.Role, role);
+
+                            List<Claim> claims = new List<Claim> { emailClaim, nameClaim/*, roleClaim*/ };
+
+                            // Add the list of claims to a ClaimsIdentity
+                            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                            // Add identity to a ClaimsPrincipal
+                            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                            // Call HttpContext.SigninAsync() method to encrypt the principal
+                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
                             return true;
                         }
                         else
