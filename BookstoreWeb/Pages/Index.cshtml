@@ -2,9 +2,11 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = HttpContext.User.Identity.IsAuthenticated ? "_LayoutAuthenticated" : "_Layout";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome to The Bookstore</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body class="bg-img">
+    <div class="text-center">
+        <h1 class="display-4">Welcome to The Bookstore</h1>
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+</body>
