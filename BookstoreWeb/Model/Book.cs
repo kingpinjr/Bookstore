@@ -4,7 +4,6 @@ namespace BookstoreWeb.Model
 {
     public class Book
     {
-        [Required]
         public int BookId {  get; set; }
         [Display(Name = "Title")]
         [Required]
@@ -14,7 +13,7 @@ namespace BookstoreWeb.Model
         public string Description { get; set; }
         [Display(Name = "Price")]
         [Required]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
         [Display(Name = "Author")]
         [Required]
         public int AuthorId { get; set; }
@@ -26,10 +25,10 @@ namespace BookstoreWeb.Model
         public string Publisher { get; set; }
         [Display(Name = "Publication Date")]
         [Required]
-        public string PublicationDate { get; set; }
+        public DateOnly PublicationDate { get; set; }
         [Display(Name = "ISBN")]
         [Required]
-        public int ISBN { get; set; }
+        public string ISBN { get; set; }
         [Display(Name = "Stock")]
         [Required]
         public int Stock {  get; set; }

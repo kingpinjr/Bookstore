@@ -9,6 +9,26 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+SET IDENTITY_INSERT [dbo].[Author] ON 
+GO
+INSERT [dbo].[Author] ([AuthorID], [FirstName], [LastName], [Description]) VALUES (1, N'John', N'Doe', N'vsdkvn')
+GO
+INSERT [dbo].[Author] ([AuthorID], [FirstName], [LastName], [Description]) VALUES (2, N'Jane', N'Doe', N'lksdcns')
+GO
+INSERT [dbo].[Author] ([AuthorID], [FirstName], [LastName], [Description]) VALUES (3, N'Sarah', N'Smith', N'cool girl')
+GO
+SET IDENTITY_INSERT [dbo].[Author] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Bookstore] ON 
+GO
+INSERT [dbo].[Bookstore] ([BookstoreID], [BookstoreName], [City], [State], [PostalCode], [Address], [PhoneNumber]) VALUES (1, N'Barnes & Noble', N'Tyler', N'Texas', 75703, N'4916 S Broadway Ave', N'9035343996')
+GO
+INSERT [dbo].[Bookstore] ([BookstoreID], [BookstoreName], [City], [State], [PostalCode], [Address], [PhoneNumber]) VALUES (2, N'Half Price Books', N'McKinney', N'Washington', 75682, N'8966 S Broadway Ave', N'9035618258')
+GO
+INSERT [dbo].[Bookstore] ([BookstoreID], [BookstoreName], [City], [State], [PostalCode], [Address], [PhoneNumber]) VALUES (3, N'Amazon', N'Allen', N'California', 35982, N'123 Main St', N'3569875216')
+GO
+SET IDENTITY_INSERT [dbo].[Bookstore] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Genre] ON 
 GO
 INSERT [dbo].[Genre] ([GenreID], [GenreName]) VALUES (1, N'Horror')
@@ -33,7 +53,8 @@ SET IDENTITY_INSERT [dbo].[Genre] OFF
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
 GO
-INSERT [dbo].[User] ([UserID], [FirstName], [LastName], [Email], [Password], [PhoneNumber], [Address], [City], [State], [PostalCode], [isAdmin]) VALUES (1, N'g', N'k', N'email@email.com', N'$2a$13$GfLt4o7fe4gcmK31LU2R5ubE5zsu3YADQK.TR3WXqvO9e.OD4dNWm', N'111111', N'111 doiajwd', N'al', N'tx', 84202, 0)
+INSERT [dbo].[User] ([UserID], [FirstName], [LastName], [Email], [Password], [PhoneNumber], [Address], [City], [State], [PostalCode], [isAdmin]) VALUES (1, N'a', N'a', N'a@gmail.com', N'$2a$13$R/acXwGqvU5FN1l0UFTREu1c/JNq9VznXaFApqEsxlT7OAdWyghaG', N'1234567890', N'1333 Pearl St', N'Nacogdoches', N'Texas', 75961, 0)
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
+

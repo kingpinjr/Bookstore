@@ -12,10 +12,15 @@ namespace BookstoreWeb.Pages.Books
     {
         public Book Book { get; set; } = new Book();
         public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Bookstores { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Authors { get; set; } = new List<SelectListItem>();
+
         public void OnGet(int id)
         {
             PopulateBook(id);
             PopulateGenreList();
+            PopulateBookstoreList();
+            PopulateAuthorList();
         }
         public IActionResult OnPost(int id)
         {
@@ -23,8 +28,8 @@ namespace BookstoreWeb.Pages.Books
             {
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
-                    string cmdText = "UPDATE Book SET Title=@title, Description=@description, Price=@price, AuthorId=@authorId, BokstoreId=@bookstoreId," +
-                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock, GenreId= @genreId WHERE BookId=@bookId";
+                    string cmdText = "UPDATE Book SET Title=@title, Description=@description, Price=@price, AuthorID=@authorId, BookstoreID=@bookstoreId," +
+                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock, GenreID= @genreId WHERE BookID=@bookId";
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", Book.Title);
                     cmd.Parameters.AddWithValue("@description", Book.Description);
@@ -52,7 +57,7 @@ namespace BookstoreWeb.Pages.Books
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT GenreId, GenreName FROM Genre ORDER BY GenreName";
+                string cmdText = "SELECT GenreID, GenreName FROM Genre ORDER BY GenreName";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -74,11 +79,62 @@ namespace BookstoreWeb.Pages.Books
             }
         }
 
+        public void PopulateBookstoreList()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT BookstoreID, BookstoreName FROM Bookstore ORDER BY BookstoreName";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var bookstore = new SelectListItem();
+                        bookstore.Value = reader.GetInt32(0).ToString();
+                        bookstore.Text = reader.GetString(1);
+                        if (bookstore.Value == Book.BookstoreId.ToString())
+                        {
+                            bookstore.Selected = true;
+                        }
+                        Bookstores.Add(bookstore);
+                    }
+                }
+            }
+        }
+        public void PopulateAuthorList()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT AuthorID, FirstName, LastName FROM Author ORDER BY LastName";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var author = new SelectListItem();
+                        author.Value = reader.GetInt32(0).ToString();
+                        author.Text = reader.GetString(1) + " " + reader.GetString(2);
+                        if (author.Value == Book.AuthorId.ToString())
+                        {
+                            author.Selected = true;
+                        }
+                        Authors.Add(author);
+                    }
+                }
+            }
+        }
+
         public void PopulateBook(int id)
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT Title, Description, Price, AuthorId, BokstoreId, Publisher, PublicationDate, ISBN, Stock, GenreId FROM Book WHERE BookId=@bookId";
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID FROM Book WHERE BookID=@bookId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@bookId", id);
                 conn.Open();
@@ -88,16 +144,16 @@ namespace BookstoreWeb.Pages.Books
                 {
                     reader.Read();
                     Book.BookId = id;
-                    Book.Title = reader.GetString(1);
-                    Book.Description = reader.GetString(2);
-                    Book.Price = reader.GetString(3);
-                    Book.AuthorId = reader.GetInt32(4);
-                    Book.BookstoreId = reader.GetInt32(5);
-                    Book.Publisher = reader.GetString(6);
-                    Book.PublicationDate = reader.GetString(7);
-                    Book.ISBN = reader.GetInt32(8);
-                    Book.Stock = reader.GetInt32(9);
-                    Book.GenreId = reader.GetInt32(10);
+                    Book.Title = reader.GetString(0);
+                    Book.Description = reader.GetString(1);
+                    Book.Price = reader.GetDecimal(2);
+                    Book.AuthorId = reader.GetInt32(3);
+                    Book.BookstoreId = reader.GetInt32(4);
+                    Book.Publisher = reader.GetString(5);
+                    Book.PublicationDate = DateOnly.FromDateTime(reader.GetDateTime(6));
+                    Book.ISBN = reader.GetString(7);
+                    Book.Stock = reader.GetInt32(8);
+                    Book.GenreId = reader.GetInt32(9);
                 }
             }
         }

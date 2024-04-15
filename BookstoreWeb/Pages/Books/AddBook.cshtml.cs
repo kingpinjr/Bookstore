@@ -14,9 +14,13 @@ namespace BookstoreWeb.Pages.Books
     {
         public Book newBook { get; set; } = new Book();
         public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Bookstores { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Authors { get; set; } = new List<SelectListItem>();
         public void OnGet()
         {
             PopulateGenreList();
+            PopulateBookstoreList();
+            PopulateAuthorList();
         }
         public IActionResult OnPost()
         {
@@ -24,8 +28,8 @@ namespace BookstoreWeb.Pages.Books
             {
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
-                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorId, BokstoreId, Publisher, PublicationDate, ISBN, Stock, GenreId)" +
-                        "VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock, @genreId)";
+                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID)" +
+                        "OUTPUT INSERTED.BookID VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock, @genreId)";
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", newBook.Title);
                     cmd.Parameters.AddWithValue("@description", newBook.Description);
@@ -39,7 +43,8 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@genreId", newBook.GenreId);
 
                     conn.Open();
-                    cmd.ExecuteNonQuery();
+                    int id = (int)cmd.ExecuteScalar();
+                    newBook.BookId = id;
                     return RedirectToPage("ViewBooks");
                 }
             }
@@ -52,7 +57,7 @@ namespace BookstoreWeb.Pages.Books
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT GenreId, GenreName FROM Genre ORDER BY GenreName";
+                string cmdText = "SELECT GenreID, GenreName FROM Genre ORDER BY GenreName";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -65,6 +70,49 @@ namespace BookstoreWeb.Pages.Books
                         genre.Value = reader.GetInt32(0).ToString();
                         genre.Text = reader.GetString(1);
                         Genres.Add(genre);
+                    }
+                }
+            }
+        }
+
+        public void PopulateBookstoreList()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT BookstoreID, BookstoreName FROM Bookstore ORDER BY BookstoreName";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var bookstore = new SelectListItem();
+                        bookstore.Value = reader.GetInt32(0).ToString();
+                        bookstore.Text = reader.GetString(1);
+                        Bookstores.Add(bookstore);
+                    }
+                }
+            }
+        }
+        public void PopulateAuthorList()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT AuthorID, FirstName, LastName FROM Author ORDER BY LastName";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var author = new SelectListItem();
+                        author.Value = reader.GetInt32(0).ToString();
+                        author.Text = reader.GetString(1) + " " + reader.GetString(2);
+                        Authors.Add(author);
                     }
                 }
             }
