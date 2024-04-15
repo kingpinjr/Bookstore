@@ -29,7 +29,8 @@ namespace BookstoreWeb.Pages.Books
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID FROM Book WHERE GenreID=@genreId";
+                // add 
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID, BookID FROM Book WHERE GenreID=@genreId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@genreId", SelectedGenreId);
                 conn.Open();
@@ -50,6 +51,7 @@ namespace BookstoreWeb.Pages.Books
                         book.ISBN = reader.GetString(7);
                         book.Stock = reader.GetInt32(8);
                         book.GenreId = reader.GetInt32(9);
+                        book.BookId = reader.GetInt32(10);
                         Books.Add(book);
                     }
                 }
