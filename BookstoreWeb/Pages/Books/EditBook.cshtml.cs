@@ -11,7 +11,8 @@ namespace BookstoreWeb.Pages.Books
     public class EditBookModel : PageModel
     {
         public Book Book { get; set; } = new Book();
-        public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public List<GenreInfo> Genres { get; set; } = new List<GenreInfo>();
+        public List<int> selectedGenreIds { get; set; } = new List<int>();
         public List<SelectListItem> Bookstores { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Authors { get; set; } = new List<SelectListItem>();
 
@@ -29,7 +30,7 @@ namespace BookstoreWeb.Pages.Books
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
                     string cmdText = "UPDATE Book SET Title=@title, Description=@description, Price=@price, AuthorID=@authorId, BookstoreID=@bookstoreId," +
-                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock, GenreID= @genreId WHERE BookID=@bookId";
+                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock WHERE BookID=@bookId";
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", Book.Title);
                     cmd.Parameters.AddWithValue("@description", Book.Description);
@@ -40,8 +41,9 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@publicationDate", Book.PublicationDate);
                     cmd.Parameters.AddWithValue("@isbn", Book.ISBN);
                     cmd.Parameters.AddWithValue("@stock", Book.Stock);
-                    cmd.Parameters.AddWithValue("@genreId", Book.GenreId);
                     cmd.Parameters.AddWithValue("@bookId", id);
+                    DeleteExistingGenres(id);
+                    InsertBookGenre(id);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -53,6 +55,36 @@ namespace BookstoreWeb.Pages.Books
                 return Page();
             }
         }
+
+        private void DeleteExistingGenres(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "DELETE * FROM BookGenre WHERE BookID = @bookId";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                cmd.Parameters.AddWithValue("@bookId", id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void InsertBookGenre(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "INSERT INTO BookGenre(BookID, GenreID) VALUES(@bookId, @genreId)";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                for (int i = 0; i < selectedGenreIds.Count; i++)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@bookId", id);
+                    cmd.Parameters.AddWithValue("@genreId", selectedGenreIds[i]);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private void PopulateGenreList()
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
@@ -66,12 +98,12 @@ namespace BookstoreWeb.Pages.Books
                 {
                     while (reader.Read())
                     {
-                        var genre = new SelectListItem();
-                        genre.Value = reader.GetInt32(0).ToString();
-                        genre.Text = reader.GetString(1);
-                        if (genre.Value == Book.GenreId.ToString())
+                        var genre = new GenreInfo();
+                        genre.GenreID = reader.GetInt32(0);
+                        genre.GenreName = reader.GetString(1);
+                        if (Book.GenreIds.Contains(genre.GenreID))
                         {
-                            genre.Selected = true;
+                            genre.isSelected = true;
                         }
                         Genres.Add(genre);
                     }
@@ -134,7 +166,7 @@ namespace BookstoreWeb.Pages.Books
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID FROM Book WHERE BookID=@bookId";
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, FROM Book WHERE BookID=@bookId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@bookId", id);
                 conn.Open();
@@ -153,9 +185,38 @@ namespace BookstoreWeb.Pages.Books
                     Book.PublicationDate = DateOnly.FromDateTime(reader.GetDateTime(6));
                     Book.ISBN = reader.GetString(7);
                     Book.Stock = reader.GetInt32(8);
-                    Book.GenreId = reader.GetInt32(9);
+                    PopulateBookGenre();
                 }
             }
         }
+
+        private void PopulateBookGenre()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT GenreID FROM BookGenre WHERE BookID = @bookId";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@bookId", Book.BookId);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                int ctr = 0;
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var genreId = reader.GetInt32(0);
+                        Book.GenreIds.Add(genreId);
+                        selectedGenreIds.Add(genreId);
+                    }
+                }
+            }
+        }
+    }
+    public class GenreInfo
+    {
+        public int GenreID { get; set; }
+        public string GenreName { get; set; }
+        public bool isSelected { get; set; }
     }
 }

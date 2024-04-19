@@ -33,6 +33,6 @@ namespace BookstoreWeb.Model
         [Required]
         public int Stock {  get; set; }
         [Required]
-        public int GenreId { get; set; }
+        public List<int> GenreIds { get; set; }
     }
 }

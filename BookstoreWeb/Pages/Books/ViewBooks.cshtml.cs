@@ -11,9 +11,8 @@ namespace BookstoreWeb.Pages.Books
     public class ViewBooksModel : PageModel
     {
         public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
-
+        public List<GenreInfo> SelectedGenreInfo { get; set; } = new List<GenreInfo>();
         public List<Book> Books { get; set; } = new List<Book>();
-
         public int SelectedGenreId { get; set; }
         public void OnGet()
         {
@@ -22,15 +21,16 @@ namespace BookstoreWeb.Pages.Books
 
           public void OnPost()
         {
-            PopulateBook(SelectedGenreId);
+            PopulateBook();
             PopulateGenreList();
         }
-        public void PopulateBook(int SelectedGenreId)
+        public void PopulateBook()
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
                 // add 
-                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID, BookID FROM Book WHERE GenreID=@genreId";
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, Book.BookID FROM Book " +
+                                 "INNER JOIN BookGenre ON Book.BookID = BookGenre.BookID WHERE BookGenre.GenreID=@genreId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@genreId", SelectedGenreId);
                 conn.Open();
@@ -50,13 +50,40 @@ namespace BookstoreWeb.Pages.Books
                         book.PublicationDate = DateOnly.FromDateTime(reader.GetDateTime(6));
                         book.ISBN = reader.GetString(7);
                         book.Stock = reader.GetInt32(8);
-                        book.GenreId = reader.GetInt32(9);
-                        book.BookId = reader.GetInt32(10);
+                        book.BookId = reader.GetInt32(9);
+                        PopulateBookGenres(book);
                         Books.Add(book);
                     }
                 }
             }
         }
+
+        private void PopulateBookGenres(Book book)
+        {
+            using(SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "SELECT BookGenre.GenreID, GenreName FROM BookGenre INNER JOIN Genre ON BookGenre.GenreID = Genre.GenreID WHERE BookID = @bookId";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@bookId", book.BookId);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                int ctr = 0;
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        book.GenreIds.Add(reader.GetInt32(0));
+                        var genre = new GenreInfo();
+                        genre.GenreID = book.GenreIds[ctr];
+                        genre.GenreName = reader.GetString(1);
+                        SelectedGenreInfo.Add(genre);
+                        ctr++;
+                    }
+                }
+            }
+        }
+
         public void PopulateGenreList()
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
@@ -82,6 +109,10 @@ namespace BookstoreWeb.Pages.Books
                 }
             }
         }
-        
+        public class GenreInfo
+        {
+            public int GenreID { get; set; }
+            public string GenreName { get; set; }
+        }
     }
 }

@@ -9,3 +9,6 @@
     width: 42px;
     width: 42px;
 }
+#genrelist li + li:before {
+    content: ", ";
+}

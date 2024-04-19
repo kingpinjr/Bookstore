@@ -13,7 +13,8 @@ namespace BookstoreWeb.Pages.Books
     public class AddBookModel : PageModel
     {
         public Book newBook { get; set; } = new Book();
-        public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public List<GenreInfo> Genres { get; set; } = new List<GenreInfo>();
+        public List<int> selectedGenreIds { get; set; } = new List<int>();
         public List<SelectListItem> Bookstores { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Authors { get; set; } = new List<SelectListItem>();
         public void OnGet()
@@ -24,12 +25,14 @@ namespace BookstoreWeb.Pages.Books
         }
         public IActionResult OnPost()
         {
+            int id = 0;
             if (ModelState.IsValid)
             {
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
-                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, GenreID)" +
-                        "OUTPUT INSERTED.BookID VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock, @genreId)";
+                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock)" +
+                        "OUTPUT INSERTED.BookID VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock)";
+                        
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", newBook.Title);
                     cmd.Parameters.AddWithValue("@description", newBook.Description);
@@ -40,12 +43,20 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@publicationDate", newBook.PublicationDate);
                     cmd.Parameters.AddWithValue("@isbn", newBook.ISBN);
                     cmd.Parameters.AddWithValue("@stock", newBook.Stock);
-                    cmd.Parameters.AddWithValue("@genreId", newBook.GenreId);
 
                     conn.Open();
-                    int id = (int)cmd.ExecuteScalar();
+                    id = (int)cmd.ExecuteScalar();
                     newBook.BookId = id;
+                }
+                if (id != 0)
+                {
+                    BookGenres(id);
                     return RedirectToPage("ViewBooks");
+                }
+                else
+                {
+                    ModelState.AddModelError("AddBookError", "Cannot add the book, please try again.");
+                    return Page();
                 }
             }
             else
@@ -53,6 +64,25 @@ namespace BookstoreWeb.Pages.Books
                 return Page();
             }
         }
+
+        private void BookGenres(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+                string cmdText = "INSERT INTO BookGenre(BookID, GenreID) VALUES(@bookId, @genreId)";
+                SqlCommand cmd = new SqlCommand(cmdText, conn);
+                conn.Open();
+                for(int i = 0; i < selectedGenreIds.Count; i++)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@bookId", id);
+                    cmd.Parameters.AddWithValue("@genreId", selectedGenreIds[i]);
+                    newBook.GenreIds.Add(selectedGenreIds[i]);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void PopulateGenreList()
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
@@ -62,13 +92,14 @@ namespace BookstoreWeb.Pages.Books
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if(reader.HasRows)
+                if (reader.HasRows)
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
-                        var genre = new SelectListItem();
-                        genre.Value = reader.GetInt32(0).ToString();
-                        genre.Text = reader.GetString(1);
+                        GenreInfo genre = new GenreInfo();
+                        genre.GenreID = reader.GetInt32(0);
+                        genre.GenreName = reader.GetString(1);
+                        genre.isSelected = false;
                         Genres.Add(genre);
                     }
                 }
@@ -116,6 +147,12 @@ namespace BookstoreWeb.Pages.Books
                     }
                 }
             }
+        }
+        public class GenreInfo
+        {
+            public int GenreID { get; set; }
+            public string GenreName { get; set; }
+            public bool isSelected { get; set; }
         }
     }
 }

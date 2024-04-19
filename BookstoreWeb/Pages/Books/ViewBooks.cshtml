@@ -91,11 +91,16 @@
             </div>
             <div class="row m-2">
                 <div class="col-2">
-                    <label class="form-label" asp-for="@book.GenreId"></label>
+                    <label class="form-label" asp-for="@book.GenreIds">Genres</label>
                 </div>
-                <div class="col-10">
-                    <label class="form-label">@book.GenreId</label>
-                </div>
+                <ul id="genrelist">
+                    @foreach(var g in Model.SelectedGenreInfo)
+                    {
+                        <li>
+                            <label>@g.GenreName</label>
+                        </li>
+                    }
+                </ul>
             </div>
             <div class="row m-2">
                 <div class="col-2">
