@@ -93,14 +93,21 @@
                 <div class="col-2">
                     <label class="form-label" asp-for="@book.GenreIds">Genres</label>
                 </div>
-                <ul id="genrelist">
+                <div class="col-10">
                     @foreach(var g in Model.SelectedGenreInfo)
                     {
-                        <li>
+                        
+                        @if(@g.GenreID != Model.SelectedGenreInfo[Model.SelectedGenreInfo.Count - 1].GenreID)
+                        {
+                            <label>@g.GenreName,</label>
+                        }
+                        else
+                        {
                             <label>@g.GenreName</label>
-                        </li>
-                    }
-                </ul>
+                        }
+                }
+                   
+                </div>
             </div>
             <div class="row m-2">
                 <div class="col-2">

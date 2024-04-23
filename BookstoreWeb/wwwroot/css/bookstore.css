@@ -11,4 +11,5 @@
 }
 #genrelist li + li:before {
     content: ", ";
+    border: 0px;
 }
