@@ -9,12 +9,12 @@
     [PublicationDate] DATE           NOT NULL,
     [ISBN]            NVARCHAR (13)  NOT NULL,
     [Stock]           INT            NOT NULL,
-    [GenreID]         INT            NOT NULL,
     CONSTRAINT [PK_Book] PRIMARY KEY CLUSTERED ([BookID] ASC),
     CONSTRAINT [FK_Book_Author] FOREIGN KEY ([AuthorID]) REFERENCES [dbo].[Author] ([AuthorID]),
-    CONSTRAINT [FK_Book_Bookstore] FOREIGN KEY ([BookstoreID]) REFERENCES [dbo].[Bookstore] ([BookstoreID]),
-    CONSTRAINT [FK_Book_Genre] FOREIGN KEY ([GenreID]) REFERENCES [dbo].[Genre] ([GenreID])
+    CONSTRAINT [FK_Book_Bookstore] FOREIGN KEY ([BookstoreID]) REFERENCES [dbo].[Bookstore] ([BookstoreID])
 );
+
+
 
 
 

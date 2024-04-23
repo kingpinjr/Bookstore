@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookstoreWeb.Model
 {
@@ -32,7 +33,7 @@ namespace BookstoreWeb.Model
         [Display(Name = "Stock")]
         [Required]
         public int Stock {  get; set; }
-        [Required]
-        public List<int> GenreIds { get; set; }
+        [ValidateNever]
+        public List<int> GenreIds { get; set; } = new List<int>();
     }
 }

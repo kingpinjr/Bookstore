@@ -22,6 +22,7 @@ namespace BookstoreWeb.Pages.Books
             PopulateGenreList();
             PopulateBookstoreList();
             PopulateAuthorList();
+            newBook.GenreIds = selectedGenreIds;
         }
         public IActionResult OnPost()
         {
@@ -31,7 +32,7 @@ namespace BookstoreWeb.Pages.Books
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
                     string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock)" +
-                        "OUTPUT INSERTED.BookID VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock)";
+                        " VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock); SELECT @@identity AS BookId";
                         
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", newBook.Title);
@@ -45,8 +46,17 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@stock", newBook.Stock);
 
                     conn.Open();
-                    id = (int)cmd.ExecuteScalar();
-                    newBook.BookId = id;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        if (reader["BookId"] != null)
+                        {
+                            id = int.Parse(reader["BookId"].ToString());
+                            newBook.BookId = id;
+                        }
+                    }
+                    
                 }
                 if (id != 0)
                 {
