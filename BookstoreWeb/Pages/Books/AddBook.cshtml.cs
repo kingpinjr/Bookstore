@@ -1,5 +1,6 @@
 using BookstoreBusiness;
 using BookstoreWeb.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using System.Reflection;
 
 namespace BookstoreWeb.Pages.Books
 {
+    [Authorize]
     [BindProperties]
     public class AddBookModel : PageModel
     {
