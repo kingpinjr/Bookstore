@@ -31,8 +31,8 @@ namespace BookstoreWeb.Pages.Books
             {
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
-                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock)" +
-                        " VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock); SELECT @@identity AS BookId";
+                    string cmdText = "INSERT INTO Book(Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, PictureURL)" +
+                        " VALUES  (@title, @description, @price, @authorId, @bookstoreId, @publisher, @publicationDate, @isbn, @stock, @pictureUrl); SELECT @@identity AS BookId";
                         
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", newBook.Title);
@@ -44,6 +44,7 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@publicationDate", newBook.PublicationDate);
                     cmd.Parameters.AddWithValue("@isbn", newBook.ISBN);
                     cmd.Parameters.AddWithValue("@stock", newBook.Stock);
+                    cmd.Parameters.AddWithValue("@pictureUrl", newBook.PictureURL);
 
                     conn.Open();
                     SqlDataReader reader = cmd.ExecuteReader();

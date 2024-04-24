@@ -5,8 +5,88 @@
     Layout = HttpContext.User.Identity.IsAuthenticated ? "_LayoutAuthenticated" : "_Layout";
 }
 <body class="bg-img">
-    <div class="text-center">
-        <h1 class="display-4">Welcome to The Bookstore</h1>
-        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    </div>
+    <form method="post" class="form-group">
+        <div class="text-center">
+            <h1 class="display-4">Welcome to The Bookstore</h1>
+            <p>Find your next favorite book today</p>
+        </div>
+        <div class="main">
+            <h3>Bestsellers</h3>
+            <div class="container-xl p-2 my-5 border bg-light">
+                <div class="row m-2 border">
+                    <div class="row m-2">
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/81xBVvXlycL._SL1500_.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>A Court of Thorns and Roses</h5>
+                            <p>Author: Sarah J. Maas</p>
+                            <p>Price: $10.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/81i34roycwL._SL1500_.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>The Butterfly Garden</h5>
+                            <p>Author: Dot Hutchison</p>
+                            <p>Price: $9.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/61vBJ41AO5L._SL1200_.jpg" width="230" height="350">
+                            <p> </p>
+                            <h5>No Longer Human</h5>
+                            <p>Author: Osamu Dazai</p>
+                            <p>Price: $17.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/91MIF5C6gvL._SL1500_.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>If Cats Disappeared From The World</h5>
+                            <p>Author: Genki Kawamura</p>
+                            <p>Price: $13.99</p>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button id="btnView" class="btn btn-primary">View All Books</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Bookstore Favorites</h3>
+            <div class="container-xl p-2 my-5 border bg-light">
+                <div class="row m-2 border">
+                    <div class="row m-2">
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/51s2Sl4NIxL._SY445_SX342_.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>Pride and Prejudice</h5>
+                            <p>Author: Jane Austen</p>
+                            <p>Price: $12.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/81wUVpREPSL._SL1500_.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>The Bell Jar</h5>
+                            <p>Author: Sylvia Plath</p>
+                            <p>Price: $10.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/81offywaW+L._SL1500_.jpg" width="230" height="350">
+                            <p> </p>
+                            <h5>If It Bleeds</h5>
+                            <p>Author: Stephen King</p>
+                            <p>Price: $15.99</p>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="https://m.media-amazon.com/images/I/41RpulOsOoL.jpg" width="230" height="350">
+                            <p></p>
+                            <h5>And Then There Were None</h5>
+                            <p>Author: Agatha Christie</p>
+                            <p>Price: $9.99</p>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button id="btnView" class="btn btn-primary">View All Books</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </body>

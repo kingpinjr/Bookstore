@@ -16,5 +16,9 @@ namespace BookstoreWeb.Pages
         {
 
         }
+        public IActionResult OnPost()
+        {
+            return RedirectToPage("Books/ViewBooks");
+        }
     }
 }
