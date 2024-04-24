@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using static System.Net.WebRequestMethods;
 
 namespace BookstoreWeb.Model
 {
@@ -33,6 +34,8 @@ namespace BookstoreWeb.Model
         [Display(Name = "Stock")]
         [Required]
         public int Stock {  get; set; }
+        [Display(Name = "Picture URL")]
+        public string PictureURL { get; set; } = "https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg";
         [ValidateNever]
         public List<int> GenreIds { get; set; } = new List<int>();
     }

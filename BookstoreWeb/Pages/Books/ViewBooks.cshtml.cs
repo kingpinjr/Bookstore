@@ -29,7 +29,7 @@ namespace BookstoreWeb.Pages.Books
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
                 // add 
-                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, Book.BookID FROM Book " +
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, PictureURL, Book.BookID FROM Book " +
                                  "INNER JOIN BookGenre ON Book.BookID = BookGenre.BookID WHERE BookGenre.GenreID=@genreId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@genreId", SelectedGenreId);
@@ -50,7 +50,8 @@ namespace BookstoreWeb.Pages.Books
                         book.PublicationDate = DateOnly.FromDateTime(reader.GetDateTime(6));
                         book.ISBN = reader.GetString(7);
                         book.Stock = reader.GetInt32(8);
-                        book.BookId = reader.GetInt32(9);
+                        book.PictureURL = reader.GetString(9);
+                        book.BookId = reader.GetInt32(10);
                         PopulateBookGenres(book);
                         Books.Add(book);
                     }

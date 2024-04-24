@@ -30,7 +30,7 @@ namespace BookstoreWeb.Pages.Books
                 using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
                 {
                     string cmdText = "UPDATE Book SET Title=@title, Description=@description, Price=@price, AuthorID=@authorId, BookstoreID=@bookstoreId," +
-                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock WHERE BookID=@bookId";
+                        " Publisher=@publisher, PublicationDate=@publicationDate, ISBN=@isbn, Stock=@stock, PictureURL=@pictureUrl WHERE BookID=@bookId";
                     SqlCommand cmd = new SqlCommand(cmdText, conn);
                     cmd.Parameters.AddWithValue("@title", Book.Title);
                     cmd.Parameters.AddWithValue("@description", Book.Description);
@@ -41,6 +41,7 @@ namespace BookstoreWeb.Pages.Books
                     cmd.Parameters.AddWithValue("@publicationDate", Book.PublicationDate);
                     cmd.Parameters.AddWithValue("@isbn", Book.ISBN);
                     cmd.Parameters.AddWithValue("@stock", Book.Stock);
+                    cmd.Parameters.AddWithValue("@pictureUrl", Book.PictureURL);
                     cmd.Parameters.AddWithValue("@bookId", id);
                     DeleteExistingGenres(id);
                     InsertBookGenre(id);
@@ -166,7 +167,7 @@ namespace BookstoreWeb.Pages.Books
         {
             using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
             {
-                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock FROM Book WHERE BookID=@bookId";
+                string cmdText = "SELECT Title, Description, Price, AuthorID, BookstoreID, Publisher, PublicationDate, ISBN, Stock, PictureURL FROM Book WHERE BookID=@bookId";
                 SqlCommand cmd = new SqlCommand(cmdText, conn);
                 cmd.Parameters.AddWithValue("@bookId", id);
                 conn.Open();
@@ -185,6 +186,7 @@ namespace BookstoreWeb.Pages.Books
                     Book.PublicationDate = DateOnly.FromDateTime(reader.GetDateTime(6));
                     Book.ISBN = reader.GetString(7);
                     Book.Stock = reader.GetInt32(8);
+                    Book.PictureURL = reader.GetString(9);
                     PopulateBookGenre();
                 }
             }

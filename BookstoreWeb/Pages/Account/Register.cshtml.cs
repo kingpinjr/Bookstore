@@ -17,14 +17,13 @@ namespace BookstoreWeb.Pages.Account
         }
         public ActionResult OnPost() 
         {
-
-            if (NewPerson.Password.Length < 10)
-            {
-                ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long.");
-            }
-
             if (ModelState.IsValid)
             {
+                if (NewPerson.Password.Length < 10)
+                {
+                    ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long.");
+                    return Page();
+                }
                 // Make sure the email does not exist before registering the user
 
                 if (EmailAvailable(NewPerson.Email))
