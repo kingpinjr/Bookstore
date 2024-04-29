@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using System.Numerics;
 
 namespace BookstoreWeb.Pages.Books
 {
@@ -17,9 +18,10 @@ namespace BookstoreWeb.Pages.Books
         public void OnGet()
         {
             PopulateGenreList();
+            PopulateBook();
         }
 
-          public void OnPost()
+        public void OnPost()
         {
             PopulateBook();
             PopulateGenreList();
@@ -101,9 +103,10 @@ namespace BookstoreWeb.Pages.Books
                         var genre = new SelectListItem();
                         genre.Value = reader.GetInt32(0).ToString();
                         genre.Text = reader.GetString(1);
-                        if (genre.Value == SelectedGenreId.ToString())
+                        if (genre.Value == SelectedGenreId.ToString() || SelectedGenreId == 0)
                         {
                             genre.Selected = true;
+                            SelectedGenreId = Convert.ToInt32(genre.Value);
                         }
                         Genres.Add(genre);
                     }

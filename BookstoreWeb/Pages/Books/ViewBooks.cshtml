@@ -120,6 +120,7 @@
                     <div class="row m-2">
                         <div class="col-12 text-center">
                             <a asp-page="EditBook" asp-route-id="@book.BookId" class="btn btn-primary">Edit</a>
+                            <a asp-page="DeleteBook" asp-route-id="@book.BookId" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item? The process cannot be undone!');">Delete</a>
                         </div>
                     </div>
                 </div>
