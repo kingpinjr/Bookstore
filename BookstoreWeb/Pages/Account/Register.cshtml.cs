@@ -3,6 +3,7 @@ using BookstoreWeb.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace BookstoreWeb.Pages.Account
 {
@@ -19,9 +20,14 @@ namespace BookstoreWeb.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                if (NewPerson.Password.Length < 10)
+                var hasNumber = new Regex(@"[0-9]+");
+                var hasUpperChar = new Regex(@"[A-Z]+");
+                var hasLowerChar = new Regex(@"[a-z]+");
+                var hasMinimum10Chars = new Regex(@".{10,}");
+
+                if (!(hasNumber.IsMatch(NewPerson.Password) && hasUpperChar.IsMatch(NewPerson.Password) && hasLowerChar.IsMatch(NewPerson.Password) && hasMinimum10Chars.IsMatch(NewPerson.Password)))
                 {
-                    ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long.");
+                    ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long, contain at least one number and one uppercase letter.");
                     return Page();
                 }
                 // Make sure the email does not exist before registering the user
