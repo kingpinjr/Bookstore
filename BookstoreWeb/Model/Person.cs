@@ -14,8 +14,11 @@ namespace BookstoreWeb.Model
         [Required(ErrorMessage = "The Email is required.")]
         [Display(Name = "Email ")]
         public string Email { get; set; }
+        
         [Required(ErrorMessage = "The Password is required.")]
         [Display(Name = "Password ")]
+        [StringLength(int.MaxValue, MinimumLength = 10, ErrorMessage = "Password must be at least 10 characters long.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)", ErrorMessage = "Invalid password. Must contain at least one number, one uppercase letter, and one lowercase letter.")]
         public string Password { get; set; }
         [Required]
         public string PhoneNumber { get; set; }

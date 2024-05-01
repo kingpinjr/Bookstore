@@ -20,7 +20,7 @@ namespace BookstoreWeb.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var hasNumber = new Regex(@"[0-9]+");
+                /*var hasNumber = new Regex(@"[0-9]+");
                 var hasUpperChar = new Regex(@"[A-Z]+");
                 var hasLowerChar = new Regex(@"[a-z]+");
                 var hasMinimum10Chars = new Regex(@".{10,}");
@@ -29,7 +29,7 @@ namespace BookstoreWeb.Pages.Account
                 {
                     ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long, contain at least one number, one uppercase letter, and one lowercase letter.");
                     return Page();
-                }
+                }*/
                 // Make sure the email does not exist before registering the user
 
                 if (EmailAvailable(NewPerson.Email))
