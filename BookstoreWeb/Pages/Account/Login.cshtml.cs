@@ -62,15 +62,15 @@ namespace BookstoreWeb.Pages.Account
                             
                             // Create a principal
                             string name = reader.GetString(2);
-                            //string role = reader.GetString(4);
+                            string role = reader.GetBoolean(4) ? "1" : "0";
 
                             // Create list of claims
 
                             Claim emailClaim = new Claim(ClaimTypes.Email, LoginUser.Email);
                             Claim nameClaim = new Claim(ClaimTypes.Name, name);
-                            //Claim roleClaim = new Claim(ClaimTypes.Role, role);
+                            Claim roleClaim = new Claim(ClaimTypes.Role, role);
 
-                            List<Claim> claims = new List<Claim> { emailClaim, nameClaim/*, roleClaim*/ };
+                            List<Claim> claims = new List<Claim> { emailClaim, nameClaim, roleClaim };
 
                             // Add the list of claims to a ClaimsIdentity
                             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -13,77 +13,37 @@
         <div class="main">
             <h3>Bestsellers</h3>
             <div class="container-xl p-2 my-5 border bg-light">
-                <div class="row m-2 border">
-                    <div class="row m-2">
+                <div class="row m-2">
+                    @for (int i = 0; i < 4; i++)
+                    {
                         <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/81xBVvXlycL._SL1500_.jpg" width="230" height="350">
+                            <img src=@Model.Books[i].PictureURL width="230" height="350">
                             <p></p>
-                            <h5>A Court of Thorns and Roses</h5>
-                            <p>Author: Sarah J. Maas</p>
-                            <p>Price: $10.99</p>
+                            <h5>@Model.Books[i].Title</h5>
+                            <p>Author: @Model.Books[i].AuthorName</p>
+                            <p>Price: @Model.Books[i].Price.ToString("c")</p>
                         </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/81i34roycwL._SL1500_.jpg" width="230" height="350">
-                            <p></p>
-                            <h5>The Butterfly Garden</h5>
-                            <p>Author: Dot Hutchison</p>
-                            <p>Price: $9.99</p>
-                        </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/61vBJ41AO5L._SL1200_.jpg" width="230" height="350">
-                            <p> </p>
-                            <h5>No Longer Human</h5>
-                            <p>Author: Osamu Dazai</p>
-                            <p>Price: $17.99</p>
-                        </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/91MIF5C6gvL._SL1500_.jpg" width="230" height="350">
-                            <p></p>
-                            <h5>If Cats Disappeared From The World</h5>
-                            <p>Author: Genki Kawamura</p>
-                            <p>Price: $13.99</p>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button id="btnView" class="btn btn-primary">View All Books</button>
-                        </div>
+                    }
+                    <div class="col-12 text-center">
+                        <button id="btnView" class="btn btn-primary">View All Books</button>
                     </div>
                 </div>
             </div>
-            <h3>Bookstore Favorites</h3>
+            <h3>Bookstore</h3>
             <div class="container-xl p-2 my-5 border bg-light">
-                <div class="row m-2 border">
-                    <div class="row m-2">
+                <div class="row m-2">
+                    @for (int i = 4; i < Model.Books.Count; i++)
+                    {
                         <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/51s2Sl4NIxL._SY445_SX342_.jpg" width="230" height="350">
+                            <img src=@Model.Books[i].PictureURL width="230" height="350">
                             <p></p>
-                            <h5>Pride and Prejudice</h5>
-                            <p>Author: Jane Austen</p>
-                            <p>Price: $12.99</p>
+                            <h5>@Model.Books[i].Title</h5>
+                            <p>Author: @Model.Books[i].AuthorName</p>
+                            <p>Price: @Model.Books[i].Price.ToString("c")</p>
                         </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/81wUVpREPSL._SL1500_.jpg" width="230" height="350">
-                            <p></p>
-                            <h5>The Bell Jar</h5>
-                            <p>Author: Sylvia Plath</p>
-                            <p>Price: $10.99</p>
-                        </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/81offywaW+L._SL1500_.jpg" width="230" height="350">
-                            <p> </p>
-                            <h5>If It Bleeds</h5>
-                            <p>Author: Stephen King</p>
-                            <p>Price: $15.99</p>
-                        </div>
-                        <div class="col-3 text-center">
-                            <img src="https://m.media-amazon.com/images/I/41RpulOsOoL.jpg" width="230" height="350">
-                            <p></p>
-                            <h5>And Then There Were None</h5>
-                            <p>Author: Agatha Christie</p>
-                            <p>Price: $9.99</p>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button id="btnView" class="btn btn-primary">View All Books</button>
-                        </div>
+                    }
+                    <div class="col-12 text-center">
+                        <button id="btnView" class="btn btn-primary">View All Books</button>
                     </div>
                 </div>
             </div>

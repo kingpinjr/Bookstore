@@ -1,5 +1,7 @@
 using BookstoreBusiness;
 using BookstoreWeb.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace BookstoreWeb.Pages.Books
 {
+    [Authorize(Roles="1")]
     [BindProperties]
     public class EditBookModel : PageModel
     {

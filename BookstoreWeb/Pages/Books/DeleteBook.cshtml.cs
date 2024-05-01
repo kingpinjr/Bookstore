@@ -1,10 +1,12 @@
 using BookstoreBusiness;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 
 namespace BookstoreWeb.Pages.Books
 {
+    [Authorize(Roles = "1")]
     public class DeleteBookModel : PageModel
     {
         public IActionResult OnGet(int id)

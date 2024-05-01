@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace BookstoreWeb.Pages.Books
 {
-    [Authorize]
+    [Authorize(Roles ="1")]
     [BindProperties]
     public class AddBookModel : PageModel
     {
@@ -58,6 +58,18 @@ namespace BookstoreWeb.Pages.Books
                             id = int.Parse(reader["BookId"].ToString());
                             newBook.BookId = id;
                         }
+                    }
+
+                    string cmdText2 = "SELECT FirstName, LastName FROM Author WHERE Author.AuthorId = @authorId";
+                    SqlCommand cmd2 = new SqlCommand(cmdText2, conn);
+                    cmd2.Parameters.AddWithValue("@authorId", newBook.AuthorId);
+
+                    SqlDataReader reader2 = cmd2.ExecuteReader();
+                    if(reader2.HasRows)
+                    {
+                        reader2.Read();
+                        string authorName = reader2["FirstName"].ToString() + reader2["LastName"].ToString();
+                        newBook.AuthorName = authorName;
                     }
                     
                 }

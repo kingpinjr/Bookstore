@@ -1,6 +1,7 @@
 ﻿@page
 @model BookstoreWeb.Pages.Books.EditBookModel
 @{
+    Layout = HttpContext.User.Identity.IsAuthenticated ? "_LayoutAuthenticated" : "_Layout";
 }
 <body class="bg-img">
     <div class="container p-2 my-5 border bg-light w-50">

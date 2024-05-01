@@ -27,7 +27,7 @@ namespace BookstoreWeb.Pages.Account
 
                 if (!(hasNumber.IsMatch(NewPerson.Password) && hasUpperChar.IsMatch(NewPerson.Password) && hasLowerChar.IsMatch(NewPerson.Password) && hasMinimum10Chars.IsMatch(NewPerson.Password)))
                 {
-                    ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long, contain at least one number and one uppercase letter.");
+                    ModelState.AddModelError("InvalidPassword", "Invalid password. Must be at least 10 characters long, contain at least one number, one uppercase letter, and one lowercase letter.");
                     return Page();
                 }
                 // Make sure the email does not exist before registering the user
