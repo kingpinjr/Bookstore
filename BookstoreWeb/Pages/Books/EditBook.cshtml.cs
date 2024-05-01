@@ -1,5 +1,7 @@
 using BookstoreBusiness;
 using BookstoreWeb.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace BookstoreWeb.Pages.Books
 {
+    [Authorize(Roles="1")]
     [BindProperties]
     public class EditBookModel : PageModel
     {
@@ -188,8 +191,6 @@ namespace BookstoreWeb.Pages.Books
                     Book.Stock = reader.GetInt32(8);
                     Book.PictureURL = reader.GetString(9);
                     PopulateBookGenre();
-                    GetAuthorName();
-                    GetBookstoreName();
                 }
             }
         }
@@ -214,47 +215,6 @@ namespace BookstoreWeb.Pages.Books
                         selectedGenreIds.Add(genreId);
                     }
                 }
-            }
-        }
-        public void GetAuthorName()
-        {
-            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
-            {
-                    conn.Open();
-                    string cmdText2 = "SELECT FirstName, LastName FROM Author WHERE Author.AuthorId = @authorId";
-                    SqlCommand cmd2 = new SqlCommand(cmdText2, conn);
-                    cmd2.Parameters.AddWithValue("@authorId", Book.AuthorId);
-
-
-                    SqlDataReader reader2 = cmd2.ExecuteReader();
-                    if (reader2.HasRows)
-                    {
-                        reader2.Read();
-                        Console.WriteLine(reader2["FirstName"].ToString());
-                        Console.WriteLine(reader2["LastName"].ToString());
-                        string authorName = reader2["FirstName"].ToString() + " " + reader2["LastName"].ToString();
-                        Book.AuthorName = authorName;
-                    }
-                
-            }
-        }
-        public void GetBookstoreName()
-        {
-            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
-            {
-                    conn.Open();
-                    string cmdText = "SELECT BookstoreName FROM Bookstore WHERE Bookstore.BookstoreID = @bookstoreId";
-                    SqlCommand cmd2 = new SqlCommand(cmdText, conn);
-                    cmd2.Parameters.AddWithValue("@bookstoreId", Book.BookstoreId);
-
-
-                    SqlDataReader reader2 = cmd2.ExecuteReader();
-                    if (reader2.HasRows)
-                    {
-                        reader2.Read();
-                        string bookstoreName = reader2["BookstoreName"].ToString();
-                        Book.BookstoreName = bookstoreName;
-                    }
             }
         }
     }

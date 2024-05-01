@@ -19,11 +19,11 @@ namespace BookstoreWeb.Model
         [Display(Name = "Author")]
         [Required]
         public int AuthorId { get; set; }
-        public string AuthorName { get; set; }
+        public string? AuthorName { get; set; }
         [Display(Name = "Bookstore")]
         [Required]
         public int BookstoreId { get; set; }
-        public string BookstoreName { get; set; }
+        public string? BookstoreName { get; set; }
         [Display(Name = "Publisher")]
         [Required]
         public string Publisher { get; set; }

@@ -115,29 +115,29 @@ SET IDENTITY_INSERT [dbo].[Genre] OFF
 GO
 INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (1, 3)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (2, 6)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (5, 6)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (3, 10)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (9, 10)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (4, 10)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (14, 10)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (5, 2)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (17, 2)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (5, 10)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (17, 10)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (6, 11)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (18, 11)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (7, 1)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (21, 1)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (7, 6)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (21, 6)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (7, 10)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (21, 10)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (8, 6)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (22, 6)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (8, 10)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (22, 10)
 GO
-INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (8, 12)
+INSERT [dbo].[BookGenre] ([BookID], [GenreID]) VALUES (22, 12)
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
 GO

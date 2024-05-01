@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace BookstoreWeb.Pages.Books
 {
-    [Authorize]
+    [Authorize(Roles ="1")]
     [BindProperties]
     public class AddBookModel : PageModel
     {
