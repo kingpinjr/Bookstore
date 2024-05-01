@@ -16,96 +16,24 @@
                 <button class="btn btn-primary" id="btnView">Display</button>
             </div>
         </div>
-        @foreach (var book in Model.Books)
+        @foreach(var book in Model.Books)
         {
-            <div class="container p-2 my-5 border bg-light w-50">
-                <div class="row m-2 border">
-                    <div class="row m-2">
-                        <div class="col-12 text-center">
-                            <img src="@book.PictureURL" width="230" height="350">
-                        </div>
+            <div style=" border-block: solid;">
+                <div class="container" style="display: flex; align-items: flex-start;min-height: 400px;">
+                    <div class="book-image" style="margin: auto;">
+                        <img src="@book.PictureURL" width="230" height="350" style="margin: auto;">
                     </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.Title"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.Title</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.Description"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.Description</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.Price"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.Price.ToString("c")</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.AuthorId"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.AuthorId</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.BookstoreId"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.BookstoreId</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.Publisher"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.Publisher</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.PublicationDate"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.PublicationDate</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.ISBN"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.ISBN</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.Stock"></label>
-                        </div>
-                        <div class="col-10">
-                            <label class="form-label">@book.Stock</label>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-2">
-                            <label class="form-label" asp-for="@book.GenreIds">Genres</label>
-                        </div>
-                        <div class="col-10">
-                            @foreach(var g in Model.SelectedGenreInfo)
+                    <div class="book-details" style="width: 60%;">
+                        <h2 style="font-size: 50px; margin: 10px 0px 10px 20px;">@book.Title
+                        </h2>
+                        <p style="margin: 10px 0px 10px 20px;"><strong>Author:</strong> @book.AuthorName</p>
+                        <p style="margin: 10px 0px 10px 20px;"><strong>Published:</strong> @book.PublicationDate</p>
+                        <p style="margin: 10px 0px 10px 20px;">
+                            <strong>Genre:</strong>
+                            @foreach (var g in Model.SelectedGenreInfo)
                             {
-                        
-                                @if(@g.GenreID != Model.SelectedGenreInfo[Model.SelectedGenreInfo.Count - 1].GenreID)
+
+                                @if (@g.GenreID != Model.SelectedGenreInfo[Model.SelectedGenreInfo.Count - 1].GenreID)
                                 {
                                     <label>@g.GenreName,</label>
                                 }
@@ -113,18 +41,20 @@
                                 {
                                     <label>@g.GenreName</label>
                                 }
-                        }
-                   
-                        </div>
+                            }
+                        </p>
+                        <p style="margin: 10px 0px 10px 20px;"><strong>Description:</strong> @book.Description</p>
                     </div>
-                    <div class="row m-2">
-                        <div class="col-12 text-center">
-                            <a asp-page="EditBook" asp-route-id="@book.BookId" class="btn btn-primary">Edit</a>
-                            <a asp-page="DeleteBook" asp-route-id="@book.BookId" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item? The process cannot be undone!');">Delete</a>
-                        </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-12 text-center">
+                        <a asp-page="EditBook" asp-route-id="@book.BookId" class="btn btn-primary">Edit</a>
+                        <a asp-page="DeleteBook" asp-route-id="@book.BookId" class="btn btn-danger"
+                           onclick="return confirm('Are you sure you want to delete this item? The process cannot be undone!');">Delete</a>
                     </div>
                 </div>
             </div>
+                
         }
     </form>
 </body>

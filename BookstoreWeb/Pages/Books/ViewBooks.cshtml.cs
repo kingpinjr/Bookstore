@@ -19,12 +19,16 @@ namespace BookstoreWeb.Pages.Books
         {
             PopulateGenreList();
             PopulateBook();
+            PopulateAuthor();
+            PopulateBookstore();
         }
 
         public void OnPost()
         {
             PopulateBook();
             PopulateGenreList();
+            PopulateAuthor();
+            PopulateBookstore();
         }
         public void PopulateBook()
         {
@@ -113,10 +117,59 @@ namespace BookstoreWeb.Pages.Books
                 }
             }
         }
+        public void PopulateAuthor()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+
+                foreach (var a in Books)
+                {
+                    conn.Open();
+                    string cmdText2 = "SELECT FirstName, LastName FROM Author WHERE Author.AuthorId = @authorId";
+                    SqlCommand cmd2 = new SqlCommand(cmdText2, conn);
+                    cmd2.Parameters.AddWithValue("@authorId", a.AuthorId);
+
+
+                    SqlDataReader reader2 = cmd2.ExecuteReader();
+                    if (reader2.HasRows)
+                    {
+                        reader2.Read();
+                        string authorName = reader2["FirstName"].ToString() + " " + reader2["LastName"].ToString();
+                        a.AuthorName = authorName;
+                    }
+                    conn.Close();
+                }
+            }
+        }
+        public void PopulateBookstore()
+        {
+            using (SqlConnection conn = new SqlConnection(SecurityHelper.GetDBConnectionString()))
+            {
+
+                foreach (var a in Books)
+                {
+                    conn.Open();
+                    string cmdText = "SELECT BookstoreName FROM Bookstore WHERE Bookstore.BookstoreID = @bookstoreId";
+                    SqlCommand cmd2 = new SqlCommand(cmdText, conn);
+                    cmd2.Parameters.AddWithValue("@bookstoreId", a.BookstoreId);
+
+
+                    SqlDataReader reader2 = cmd2.ExecuteReader();
+                    if (reader2.HasRows)
+                    {
+                        reader2.Read();
+                        string bookstoreName = reader2["BookstoreName"].ToString();
+                        a.BookstoreName = bookstoreName;
+                    }
+                    conn.Close();
+                }
+            }
+        }
         public class GenreInfo
         {
             public int GenreID { get; set; }
             public string GenreName { get; set; }
         }
+
     }
 }

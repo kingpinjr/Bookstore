@@ -59,6 +59,18 @@ namespace BookstoreWeb.Pages.Books
                             newBook.BookId = id;
                         }
                     }
+
+                    string cmdText2 = "SELECT FirstName, LastName FROM Author WHERE Author.AuthorId = @authorId";
+                    SqlCommand cmd2 = new SqlCommand(cmdText2, conn);
+                    cmd2.Parameters.AddWithValue("@authorId", newBook.AuthorId);
+
+                    SqlDataReader reader2 = cmd2.ExecuteReader();
+                    if(reader2.HasRows)
+                    {
+                        reader2.Read();
+                        string authorName = reader2["FirstName"].ToString() + reader2["LastName"].ToString();
+                        newBook.AuthorName = authorName;
+                    }
                     
                 }
                 if (id != 0)
