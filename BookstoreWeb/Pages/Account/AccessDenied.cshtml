@@ -1,0 +1,13 @@
+﻿@page
+@model BookstoreWeb.Pages.Account.IndexModel
+@{
+    Layout = HttpContext.User.Identity.IsAuthenticated ? "_LayoutAuthenticated" : "_Layout";
+}
+<body class="bg-img">
+    <div class="row m-2">
+        <div class="col-12 text-center">
+            <label class="h1">Access Denied</label>
+            <p>You do not have access to this page.</p>
+        </div>
+    </div>
+</body>

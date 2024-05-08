@@ -8,6 +8,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.Cookie.Name = "BookstoreCookie";
+        options.AccessDeniedPath = "/Account/AccessDenied";
     });
 
 var app = builder.Build();
