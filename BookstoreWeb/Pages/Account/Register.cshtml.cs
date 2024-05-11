@@ -74,7 +74,7 @@ namespace BookstoreWeb.Pages.Account
                 if (NewPerson.State == null) { cmd.Parameters.AddWithValue("@state", "null"); }
                 else { cmd.Parameters.AddWithValue("@state", NewPerson.State); }
 
-                if (NewPerson.PostalCode == null) { cmd.Parameters.AddWithValue("@postalCode", "null"); }
+                if (NewPerson.PostalCode == null) { cmd.Parameters.AddWithValue("@postalCode", DBNull.Value); }
                 else { cmd.Parameters.AddWithValue("@postalCode", NewPerson.PostalCode); }
                 //cmd.Parameters.AddWithValue("@firstName", NewPerson.RoleId);
 
